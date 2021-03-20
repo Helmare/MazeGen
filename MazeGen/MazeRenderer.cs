@@ -10,13 +10,11 @@ using System.Windows.Forms;
 
 namespace MazeGen
 {
-    public partial class Main : Form
+    public partial class MazeRenderer : UserControl
     {
-        public Main()
+        public MazeRenderer()
         {
             InitializeComponent();
-            btnStep.Text = "\u25b6";
-            btnFinish.Text = "\u23ed";
         }
     }
 }
