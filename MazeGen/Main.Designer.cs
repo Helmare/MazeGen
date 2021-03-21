@@ -60,6 +60,7 @@ namespace MazeGen
             this.renderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.renderer.Location = new System.Drawing.Point(0, 0);
             this.renderer.Margin = new System.Windows.Forms.Padding(0);
+            this.renderer.Maze = null;
             this.renderer.Name = "renderer";
             this.renderer.Size = new System.Drawing.Size(1299, 630);
             this.renderer.TabIndex = 0;
@@ -85,6 +86,7 @@ namespace MazeGen
             this.btnStep.TabIndex = 0;
             this.btnStep.Text = "S";
             this.btnStep.UseVisualStyleBackColor = true;
+            this.btnStep.Click += new System.EventHandler(this.btnStep_Click);
             // 
             // btnFinish
             // 
@@ -96,6 +98,7 @@ namespace MazeGen
             this.btnFinish.TabIndex = 1;
             this.btnFinish.Text = "F";
             this.btnFinish.UseVisualStyleBackColor = true;
+            this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
             // 
             // Main
             // 

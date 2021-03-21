@@ -12,6 +12,7 @@ namespace MazeGen
     /// </summary>
     public class MazeCell
     {
+        public Maze Maze { get; }
         public int X { get; }
         public int Y { get; }
 
@@ -20,11 +21,17 @@ namespace MazeGen
         public bool TopWall { get; set; } = true;
         public bool LeftWall { get; set; } = true;
 
-        public MazeCell(int x, int y)
+        public MazeCell(Maze maze, int x, int y)
         {
+            this.Maze = maze;
             this.X = x;
             this.Y = y;
         }
+
+        public MazeCell Left => (X == 0) ? null : Maze.Cells[X - 1, Y];
+        public MazeCell Top => (Y == 0) ? null : Maze.Cells[X, Y - 1];
+        public MazeCell Right => (X == Maze.Width - 1) ? null : Maze.Cells[X + 1, Y];
+        public MazeCell Bottom => (Y == Maze.Height - 1) ? null : Maze.Cells[X, Y + 1];
     }
     
     [Flags]

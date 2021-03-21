@@ -14,11 +14,13 @@ namespace MazeGen
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (Maze == null) return;
+
             Graphics g = e.Graphics;
             g.Clear(BackColor);
 
             // Find scale and offset.
-            float xOff = 0, yOff = 0, k = 1;
+            float xOff = 0, yOff = 0, k;
             if (Width >= Maze.Width * (Height / (float) Maze.Height))
             {
                 k = Height / (float) Maze.Height;
@@ -44,8 +46,6 @@ namespace MazeGen
                     if (x > 0 && cell.LeftWall) g.DrawLine(Pens.White, xx, yy, xx, yy + k);
                 }
             }
-
-            base.OnPaint(e);
         }
     }
 }

@@ -12,13 +12,25 @@ namespace MazeGen
 {
     public partial class Main : Form
     {
+        public MazeBuilder MazeBuilder { get; } = new MazeBuilder(100, 100);
         public Main()
         {
             InitializeComponent();
             btnStep.Text = "\u25b6";
             btnFinish.Text = "\u23ed";
+            renderer.Maze = MazeBuilder.Maze;
+        }
 
-            renderer.Maze = new Maze(10, 10);
+        private void btnStep_Click(object sender, EventArgs e)
+        {
+            MazeBuilder.Step();
+            renderer.Refresh();
+        }
+
+        private void btnFinish_Click(object sender, EventArgs e)
+        {
+            MazeBuilder.Finish();
+            renderer.Refresh();
         }
     }
 }

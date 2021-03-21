@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-
-namespace MazeGen
+﻿namespace MazeGen
 {
     /// <summary>
     ///     
@@ -24,7 +20,7 @@ namespace MazeGen
             {
                 for (int y = 0; y < height; y++)
                 {
-                    Cells[x, y] = new MazeCell(x, y);
+                    Cells[x, y] = new MazeCell(this, x, y);
                 }
             }
         }
