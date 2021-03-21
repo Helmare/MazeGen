@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MazeGen
 {
@@ -9,7 +11,7 @@ namespace MazeGen
     {
         public int Width { get; }
         public int Height { get; }
-        public MazeCell[][] Cells { get; }
+        public MazeCell[,] Cells { get; }
 
         public Maze(int width, int height)
         {
@@ -17,15 +19,13 @@ namespace MazeGen
             this.Height = height;
 
             // Create cells.
-            this.Cells = new MazeCell[width][];
+            this.Cells = new MazeCell[width, height];
             for (int x = 0; x < width; x++)
             {
-                MazeCell[] column = new MazeCell[height];
                 for (int y = 0; y < height; y++)
                 {
-                    column[x] = new MazeCell(x, y);
+                    Cells[x, y] = new MazeCell(x, y);
                 }
-                Cells[x] = column;
             }
         }
     }

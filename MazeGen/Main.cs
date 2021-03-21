@@ -17,6 +17,8 @@ namespace MazeGen
             InitializeComponent();
             btnStep.Text = "\u25b6";
             btnFinish.Text = "\u23ed";
+
+            renderer.Maze = new Maze(10, 10);
         }
     }
 }

@@ -31,6 +31,6 @@ namespace MazeGen
     public enum MazeCellFlag
     {
         Unvisited = 0, Visited = 1, Solution = 2, EndPoint = 4,
-        All =  Visited | Solution | EndPoint
+        All = Visited | Solution | EndPoint
     }
 }
