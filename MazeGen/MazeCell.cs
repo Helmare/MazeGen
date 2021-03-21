@@ -15,14 +15,22 @@ namespace MazeGen
         public int X { get; }
         public int Y { get; }
 
-        public bool Visited { get; set; }
-        public bool Solution { get; set; }
-        public bool Endpoint { get; set; }
+        public MazeCellFlag Flags { get; set; } = MazeCellFlag.Unvisited;
+
+        public bool TopWall { get; set; } = true;
+        public bool LeftWall { get; set; } = true;
 
         public MazeCell(int x, int y)
         {
             this.X = x;
             this.Y = y;
         }
+    }
+    
+    [Flags]
+    public enum MazeCellFlag
+    {
+        Unvisited = 0, Visited = 1, Solution = 2, EndPoint = 4,
+        All =  Visited | Solution | EndPoint
     }
 }
