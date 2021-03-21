@@ -39,7 +39,11 @@ namespace MazeGen
                 {
                     MazeCell cell = Maze.Cells[x, y];
                     float xx = x * k + xOff, yy = y * k + yOff;
-                    if (cell.Flags.HasFlag(MazeCellFlag.EndPoint))
+                    if (cell.Flags.HasFlag(MazeCellFlag.Solution))
+                    {
+                        g.FillRectangle(Brushes.DarkRed, xx, yy, k, k);
+                    }
+                    else if (cell.Flags.HasFlag(MazeCellFlag.EndPoint))
                     {
                         g.FillRectangle(Brushes.Blue, xx, yy, k, k);
                     }
