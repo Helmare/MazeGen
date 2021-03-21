@@ -39,8 +39,14 @@ namespace MazeGen
                 {
                     MazeCell cell = Maze.Cells[x, y];
                     float xx = x * k + xOff, yy = y * k + yOff;
-                    if (!cell.Flags.HasFlag(MazeCellFlag.Visited)) 
+                    if (cell.Flags.HasFlag(MazeCellFlag.EndPoint))
+                    {
+                        g.FillRectangle(Brushes.Blue, xx, yy, k, k);
+                    }
+                    else if (!cell.Flags.HasFlag(MazeCellFlag.Visited))
+                    {
                         g.FillRectangle(Brushes.White, xx, yy, k, k);
+                    }
 
                     if (y > 0 && cell.TopWall) g.DrawLine(Pens.White, xx, yy, xx + k, yy);
                     if (x > 0 && cell.LeftWall) g.DrawLine(Pens.White, xx, yy, xx, yy + k);

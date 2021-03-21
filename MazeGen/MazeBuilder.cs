@@ -17,7 +17,6 @@ namespace MazeGen
         private Random Random { get; } = new Random();
         private Stack<MazeCell> Stack { get; } = new Stack<MazeCell>();
 
-
         public MazeBuilder(int width, int height)
         {
             Maze = new Maze(width, height);
@@ -31,6 +30,8 @@ namespace MazeGen
         /// </summary>
         public void Step()
         {
+            bool endpointFlag = false;
+
             while (Stack.Count > 0)
             {
                 MazeCell cell = Stack.Peek();
@@ -38,6 +39,11 @@ namespace MazeGen
 
                 if (dir < 0)
                 {
+                    if (!endpointFlag)
+                    {
+                        cell.Flags |= MazeCellFlag.EndPoint;
+                        endpointFlag = true;
+                    }
                     Stack.Pop();
                     continue;
                 }
@@ -54,18 +60,7 @@ namespace MazeGen
                 }
             }
         }
-        /// <summary>
-        ///     Finishes the maze (steps until finished).
-        /// </summary>
-        public void Finish()
-        {
-            while (!IsFinished)
-            {
-                Step();
-            }
-        }
-
-        public int RandomUnvisitedNeighbor(MazeCell cell, out MazeCell next)
+        private int RandomUnvisitedNeighbor(MazeCell cell, out MazeCell next)
         {
             // Find unvisited neighbors.
             Dictionary<int, MazeCell> neighbors = new Dictionary<int, MazeCell>();
@@ -94,6 +89,17 @@ namespace MazeGen
                 KeyValuePair<int, MazeCell> rand = neighbors.ToList()[r];
                 next = rand.Value;
                 return rand.Key;
+            }
+        }
+
+        /// <summary>
+        ///     Finishes the maze (steps until finished).
+        /// </summary>
+        public void Finish()
+        {
+            while (!IsFinished)
+            {
+                Step();
             }
         }
     }
