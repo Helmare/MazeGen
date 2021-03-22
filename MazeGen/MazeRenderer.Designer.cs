@@ -37,8 +37,10 @@ namespace MazeGen
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.DoubleBuffered = true;
+            this.ForeColor = System.Drawing.Color.White;
             this.Name = "MazeRenderer";
             this.Size = new System.Drawing.Size(926, 486);
+            this.SizeChanged += new System.EventHandler(this.MazeRenderer_SizeChanged);
             this.ResumeLayout(false);
 
         }

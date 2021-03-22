@@ -12,7 +12,7 @@ namespace MazeGen
 {
     public partial class Main : Form
     {
-        public MazeBuilder MazeBuilder { get; } = new MazeBuilder(25, 25);
+        public MazeBuilder MazeBuilder { get; } = new MazeBuilder(20, 4);
         public Main()
         {
             InitializeComponent();

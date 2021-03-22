@@ -58,11 +58,14 @@ namespace MazeGen
             // 
             this.renderer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.renderer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.renderer.EndpointColor = System.Drawing.Color.Blue;
+            this.renderer.ForeColor = System.Drawing.Color.White;
             this.renderer.Location = new System.Drawing.Point(0, 0);
             this.renderer.Margin = new System.Windows.Forms.Padding(0);
             this.renderer.Maze = null;
             this.renderer.Name = "renderer";
             this.renderer.Size = new System.Drawing.Size(1299, 630);
+            this.renderer.SolutionColor = System.Drawing.Color.DarkRed;
             this.renderer.TabIndex = 0;
             // 
             // controls

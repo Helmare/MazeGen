@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Net;
 using System.Windows.Forms;
 
 namespace MazeGen
@@ -6,6 +7,14 @@ namespace MazeGen
     public partial class MazeRenderer : UserControl
     {
         public Maze Maze { get; set; }
+        /// <summary>
+        ///     Gets or sets the color for MazeCells with the endpoint flag.
+        /// </summary>
+        public Color EndpointColor { get; set; } = Color.Blue;
+        /// <summary>
+        ///     Gets or sets the color for MazeCells with the solution flag.
+        /// </summary>
+        public Color SolutionColor { get; set; } = Color.DarkRed;
 
         public MazeRenderer()
         {
@@ -21,6 +30,7 @@ namespace MazeGen
 
             // Find scale and offset.
             float xOff = 0, yOff = 0, k;
+            bool verticalOuterWall = true;
             if (Width >= Maze.Width * (Height / (float) Maze.Height))
             {
                 k = Height / (float) Maze.Height;
@@ -30,7 +40,14 @@ namespace MazeGen
             {
                 k = Width / (float) Maze.Width;
                 yOff = (Height - Maze.Height * k) / 2;
+                verticalOuterWall = false;
             }
+
+            // Setup rendering tools.
+            using Brush unvisitedBrush = new SolidBrush(ForeColor);
+            using Brush endpointBrush = new SolidBrush(EndpointColor);
+            using Brush solutionBrush = new SolidBrush(SolutionColor);
+            using Pen wallPen = new Pen(ForeColor);
 
             // Render cells.
             for (int x = 0; x < Maze.Width; x++)
@@ -41,21 +58,38 @@ namespace MazeGen
                     float xx = x * k + xOff, yy = y * k + yOff;
                     if (cell.Flags.HasFlag(MazeCellFlag.Solution))
                     {
-                        g.FillRectangle(Brushes.DarkRed, xx, yy, k, k);
+                        g.FillRectangle(solutionBrush, xx, yy, k, k);
                     }
                     else if (cell.Flags.HasFlag(MazeCellFlag.EndPoint))
                     {
-                        g.FillRectangle(Brushes.Blue, xx, yy, k, k);
+                        g.FillRectangle(endpointBrush, xx, yy, k, k);
                     }
                     else if (!cell.Flags.HasFlag(MazeCellFlag.Visited))
                     {
-                        g.FillRectangle(Brushes.White, xx, yy, k, k);
+                        g.FillRectangle(unvisitedBrush, xx, yy, k, k);
                     }
 
-                    if (y > 0 && cell.TopWall) g.DrawLine(Pens.White, xx, yy, xx + k, yy);
-                    if (x > 0 && cell.LeftWall) g.DrawLine(Pens.White, xx, yy, xx, yy + k);
+                    if (y > 0 && cell.TopWall) g.DrawLine(wallPen, xx, yy, xx + k, yy);
+                    if (x > 0 && cell.LeftWall) g.DrawLine(wallPen, xx, yy, xx, yy + k);
                 }
             }
+
+            // Render outerwall.
+            if (verticalOuterWall)
+            {
+                g.DrawLine(wallPen, xOff, k, xOff, Height);
+                g.DrawLine(wallPen, xOff + Maze.Width * k, 0, xOff + Maze.Width * k, Height - k);
+            }
+            else
+            {
+                g.DrawLine(wallPen, k, yOff, Width, yOff);
+                g.DrawLine(wallPen, 0, yOff + Maze.Height * k, Width - k, yOff + Maze.Height * k);
+            }
+        }
+
+        private void MazeRenderer_SizeChanged(object sender, System.EventArgs e)
+        {
+            Refresh();
         }
     }
 }
