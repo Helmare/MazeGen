@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MazeGen
 {
@@ -28,6 +29,20 @@ namespace MazeGen
             this.Y = y;
         }
 
+        public Direction[] MovementOptions 
+        {
+            get
+            {
+                List<Direction> options = new List<Direction>();
+                if (Right != null && !Right.LeftWall) options.Add(Direction.Right);
+                if (Top != null && !TopWall) options.Add(Direction.Top);
+                if (Left != null && !LeftWall) options.Add(Direction.Left);
+                if (Bottom != null && !Bottom.TopWall) options.Add(Direction.Bottom);
+
+                return options.ToArray();
+            }
+        }
+
         public MazeCell Left => (X == 0) ? null : Maze.Cells[X - 1, Y];
         public MazeCell Top => (Y == 0) ? null : Maze.Cells[X, Y - 1];
         public MazeCell Right => (X == Maze.Width - 1) ? null : Maze.Cells[X + 1, Y];
@@ -37,7 +52,11 @@ namespace MazeGen
     [Flags]
     public enum MazeCellFlag
     {
-        Unvisited = 0, Visited = 1, Solution = 2, EndPoint = 4, Intersection = 8,
-        All = Visited | Solution | EndPoint | Intersection
+        Unvisited = 0, Visited = 1, Solution = 2,
+        All = Visited | Solution
+    }
+    public enum Direction
+    {
+        Right = 0, Top = 1, Left = 2, Bottom = 3
     }
 }

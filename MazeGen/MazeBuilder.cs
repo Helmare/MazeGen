@@ -30,8 +30,6 @@ namespace MazeGen
         /// </summary>
         public void Step()
         {
-            bool endpointFlag = false;
-
             while (Stack.Count > 0)
             {
                 MazeCell cell = Stack.Peek();
@@ -39,11 +37,6 @@ namespace MazeGen
 
                 if (dir < 0)
                 {
-                    if (!endpointFlag)
-                    {
-                        cell.Flags |= MazeCellFlag.EndPoint;
-                        endpointFlag = true;
-                    }
                     Stack.Pop();
                     continue;
                 }
@@ -55,8 +48,6 @@ namespace MazeGen
                     else if (dir == 3) next.TopWall = false;
 
                     next.Flags = MazeCellFlag.Visited;
-                    if (endpointFlag) next.Flags |= MazeCellFlag.Intersection;
-
                     Stack.Push(next);
                     break;
                 }

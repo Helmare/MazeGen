@@ -60,16 +60,18 @@ namespace MazeGen
                 for (int y = 0; y < Maze.Height; y++)
                 {
                     MazeCell cell = Maze.Cells[x, y];
+                    Direction[] options = cell.MovementOptions;
+
                     float xx = x * k + xOff, yy = y * k + yOff;
                     if (cell.Flags.HasFlag(MazeCellFlag.Solution))
                     {
                         g.FillRectangle(solutionBrush, xx, yy, k, k);
                     }
-                    else if (cell.Flags.HasFlag(MazeCellFlag.EndPoint))
+                    else if (options.Length == 1)
                     {
                         g.FillRectangle(endpointBrush, xx, yy, k, k);
                     }
-                    else if (cell.Flags.HasFlag(MazeCellFlag.Intersection))
+                    else if (options.Length > 2)
                     {
                         g.FillRectangle(intersectionBrush, xx, yy, k, k);
                     }
