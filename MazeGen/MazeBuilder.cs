@@ -55,6 +55,8 @@ namespace MazeGen
                     else if (dir == 3) next.TopWall = false;
 
                     next.Flags = MazeCellFlag.Visited;
+                    if (endpointFlag) next.Flags |= MazeCellFlag.Intersection;
+
                     Stack.Push(next);
                     break;
                 }

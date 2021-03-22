@@ -8,6 +8,10 @@ namespace MazeGen
     {
         public Maze Maze { get; set; }
         /// <summary>
+        ///     Gets or sets the color for MazeCells with the intersection flag.
+        /// </summary>
+        public Color IntersectionColor { get; set; } = Color.Lime;
+        /// <summary>
         ///     Gets or sets the color for MazeCells with the endpoint flag.
         /// </summary>
         public Color EndpointColor { get; set; } = Color.Blue;
@@ -45,6 +49,7 @@ namespace MazeGen
 
             // Setup rendering tools.
             using Brush unvisitedBrush = new SolidBrush(ForeColor);
+            using Brush intersectionBrush = new SolidBrush(IntersectionColor);
             using Brush endpointBrush = new SolidBrush(EndpointColor);
             using Brush solutionBrush = new SolidBrush(SolutionColor);
             using Pen wallPen = new Pen(ForeColor);
@@ -63,6 +68,10 @@ namespace MazeGen
                     else if (cell.Flags.HasFlag(MazeCellFlag.EndPoint))
                     {
                         g.FillRectangle(endpointBrush, xx, yy, k, k);
+                    }
+                    else if (cell.Flags.HasFlag(MazeCellFlag.Intersection))
+                    {
+                        g.FillRectangle(intersectionBrush, xx, yy, k, k);
                     }
                     else if (!cell.Flags.HasFlag(MazeCellFlag.Visited))
                     {
