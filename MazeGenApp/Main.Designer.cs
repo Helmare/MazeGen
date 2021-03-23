@@ -1,5 +1,5 @@
 ﻿
-namespace MazeGen
+namespace MazeGen.App
 {
     partial class Main
     {
@@ -30,7 +30,7 @@ namespace MazeGen
         private void InitializeComponent()
         {
             this.container = new System.Windows.Forms.TableLayoutPanel();
-            this.renderer = new MazeGen.MazeRenderer();
+            this.renderer = new MazeGen.App.MazeRenderer();
             this.controls = new System.Windows.Forms.FlowLayoutPanel();
             this.btnStep = new System.Windows.Forms.Button();
             this.btnFinish = new System.Windows.Forms.Button();

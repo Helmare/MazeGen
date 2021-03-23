@@ -1,5 +1,5 @@
 ﻿
-namespace MazeGen
+namespace MazeGen.App
 {
     partial class MazeRenderer
     {

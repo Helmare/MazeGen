@@ -2,7 +2,7 @@
 using System.Net;
 using System.Windows.Forms;
 
-namespace MazeGen
+namespace MazeGen.App
 {
     public partial class MazeRenderer : UserControl
     {
