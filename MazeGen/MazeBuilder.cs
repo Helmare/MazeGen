@@ -6,7 +6,17 @@ namespace MazeGen
 {
     public class MazeBuilder
     {
+        /// <summary>
+        ///     Gets the Maze which is being created.
+        /// </summary>
         public Maze Maze { get; }
+        /// <summary>
+        ///     Gets the current cell.
+        /// </summary>
+        public MazeCell Current => Stack.Peek();
+        /// <summary>
+        ///     Gets whether the maze has finished building.
+        /// </summary>
         public bool IsFinished => Stack.Count == 0;
 
         private Random Random { get; } = new Random();
@@ -21,31 +31,26 @@ namespace MazeGen
         }
 
         /// <summary>
-        ///     Takes another step into the maze builder.
+        ///     Takes a single step in the maze building process.
         /// </summary>
         public void Step()
         {
-            while (Stack.Count > 0)
+            MazeCell cell = Current;
+            int dir = RandomUnvisitedNeighbor(cell, out MazeCell next);
+
+            if (dir < 0)
             {
-                MazeCell cell = Stack.Peek();
-                int dir = RandomUnvisitedNeighbor(cell, out MazeCell next);
+                Stack.Pop();
+            }
+            else
+            {
+                if (dir == 0) next.LeftWall = false;
+                else if (dir == 1) cell.TopWall = false;
+                else if (dir == 2) cell.LeftWall = false;
+                else if (dir == 3) next.TopWall = false;
 
-                if (dir < 0)
-                {
-                    Stack.Pop();
-                    continue;
-                }
-                else
-                {
-                    if (dir == 0) next.LeftWall = false;
-                    else if (dir == 1) cell.TopWall = false;
-                    else if (dir == 2) cell.LeftWall = false;
-                    else if (dir == 3) next.TopWall = false;
-
-                    next.Flags = MazeCellFlag.Visited;
-                    Stack.Push(next);
-                    break;
-                }
+                next.Flags = MazeCellFlag.Visited;
+                Stack.Push(next);
             }
         }
         private int RandomUnvisitedNeighbor(MazeCell cell, out MazeCell next)
