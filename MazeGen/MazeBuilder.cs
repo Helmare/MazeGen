@@ -13,7 +13,7 @@ namespace MazeGen
         /// <summary>
         ///     Gets the current cell.
         /// </summary>
-        public MazeCell Current => Stack.Peek();
+        public MazeCell Current => (Stack.Count > 0) ? Stack.Peek() : null;
         /// <summary>
         ///     Gets whether the maze has finished building.
         /// </summary>
@@ -35,9 +35,12 @@ namespace MazeGen
         /// </summary>
         public void Step()
         {
+            // Grab current cell.
             MazeCell cell = Current;
-            int dir = RandomUnvisitedNeighbor(cell, out MazeCell next);
+            if (cell == null) return;
 
+            // Determain a random neighbor.
+            int dir = RandomUnvisitedNeighbor(cell, out MazeCell next);
             if (dir < 0)
             {
                 Stack.Pop();

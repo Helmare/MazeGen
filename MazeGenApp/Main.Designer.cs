@@ -62,7 +62,6 @@ namespace MazeGen.App
             this.renderer.ForeColor = System.Drawing.Color.White;
             this.renderer.Location = new System.Drawing.Point(0, 0);
             this.renderer.Margin = new System.Windows.Forms.Padding(0);
-            this.renderer.Maze = null;
             this.renderer.Name = "renderer";
             this.renderer.Size = new System.Drawing.Size(1299, 630);
             this.renderer.SolutionColor = System.Drawing.Color.DarkRed;

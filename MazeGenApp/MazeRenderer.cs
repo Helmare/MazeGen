@@ -6,7 +6,13 @@ namespace MazeGen.App
 {
     public partial class MazeRenderer : UserControl
     {
-        public Maze Maze { get; set; }
+        public MazeBuilder MazeBuilder { get; set; }
+        public Maze Maze => MazeBuilder.Maze;
+
+        /// <summary>
+        ///     Gets or sets the color for the current MazeCell.
+        /// </summary>
+        public Color CurrentCellColor { get; set; } = Color.Magenta;
         /// <summary>
         ///     Gets or sets the color for MazeCells with the intersection flag.
         /// </summary>
@@ -52,6 +58,7 @@ namespace MazeGen.App
             using Brush intersectionBrush = new SolidBrush(IntersectionColor);
             using Brush endpointBrush = new SolidBrush(EndpointColor);
             using Brush solutionBrush = new SolidBrush(SolutionColor);
+            using Brush currentCellBrush = new SolidBrush(CurrentCellColor);
             using Pen wallPen = new Pen(ForeColor);
 
             // Render cells.
@@ -63,23 +70,37 @@ namespace MazeGen.App
                     Direction[] options = cell.MovementOptions;
 
                     float xx = x * k + xOff, yy = y * k + yOff;
-                    if (cell.Flags.HasFlag(MazeCellFlag.Solution))
+
+                    // Decide brush.
+                    Brush brush = null;
+                    if (!MazeBuilder.IsFinished && cell.X == MazeBuilder.Current.X && cell.Y == MazeBuilder.Current.Y)
                     {
-                        g.FillRectangle(solutionBrush, xx, yy, k, k);
+                        brush = currentCellBrush;
+                    }
+                    else if (cell.Flags.HasFlag(MazeCellFlag.Solution))
+                    {
+                        brush = solutionBrush;
                     }
                     else if (options.Length == 1)
                     {
-                        g.FillRectangle(endpointBrush, xx, yy, k, k);
+                        brush = endpointBrush;
                     }
                     else if (options.Length > 2)
                     {
-                        g.FillRectangle(intersectionBrush, xx, yy, k, k);
+                        brush = intersectionBrush;
                     }
                     else if (!cell.Flags.HasFlag(MazeCellFlag.Visited))
                     {
-                        g.FillRectangle(unvisitedBrush, xx, yy, k, k);
+                        brush = unvisitedBrush;
                     }
 
+                    // Fill cell.
+                    if (brush != null)
+                    {
+                        g.FillRectangle(brush, xx, yy, k, k);
+                    }
+
+                    // Draw walls.
                     if (y > 0 && cell.TopWall) g.DrawLine(wallPen, xx, yy, xx + k, yy);
                     if (x > 0 && cell.LeftWall) g.DrawLine(wallPen, xx, yy, xx, yy + k);
                 }
