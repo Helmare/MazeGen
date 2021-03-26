@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Net;
-using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace MazeGen.App
@@ -96,7 +94,7 @@ namespace MazeGen.App
             }
 
             // Render vertical walls.
-            int[][] vlines = CalcVerticalWalls();
+            int[][] vlines = Maze.CalcVerticalWalls();
             for(int x = 0; x < vlines.Length; x++)
             {
                 int[] lines = vlines[x];
@@ -109,7 +107,7 @@ namespace MazeGen.App
             }
 
             // Render horizontal walls.
-            int[][] hlines = CalcHorizontalWalls();
+            int[][] hlines = Maze.CalcHorizontalWalls();
             for (int y = 0; y < hlines.Length; y++)
             {
                 int[] lines = hlines[y];
@@ -121,59 +119,6 @@ namespace MazeGen.App
                 }
             }
         }
-        private int[][] CalcVerticalWalls()
-        {
-            // Setup vertical walls
-            int[][] walls = new int[Maze.Width + 1][];
-            walls[0] = new int[] { 1, Maze.Height };
-            walls[Maze.Width] = new int[] { 0, Maze.Height - 1 };
-
-            // Calculate vertical walls for each cell.
-            for (int x = 1; x < Maze.Width; x++)
-            {
-                List<int> lines = new List<int>();
-                bool empty = true;
-                for(int y = 0; y < Maze.Height; y++)
-                {
-                    if (empty && Maze.Cells[x, y].LeftWall || !empty && !Maze.Cells[x, y].LeftWall)
-                    {
-                        empty = !empty;
-                        lines.Add(y);
-                    }
-                }
-                if (!empty) lines.Add(Maze.Height);
-                walls[x] = lines.ToArray();
-            }
-
-            return walls;
-        }
-        private int[][] CalcHorizontalWalls()
-        {
-            // Setup horizontal walls
-            int[][] walls = new int[Maze.Height + 1][];
-            walls[0] = new int[] { 0, Maze.Height };
-            walls[Maze.Height] = new int[] { 0, Maze.Width };
-
-            // Calculate horizontal walls for each cell.
-            for (int y = 1; y < Maze.Height; y++)
-            {
-                List<int> lines = new List<int>();
-                bool empty = true;
-                for (int x = 0; x < Maze.Width; x++)
-                {
-                    if (empty && Maze.Cells[x, y].TopWall || !empty && !Maze.Cells[x, y].TopWall)
-                    {
-                        empty = !empty;
-                        lines.Add(x);
-                    }
-                }
-                if (!empty) lines.Add(Maze.Height);
-                walls[y] = lines.ToArray();
-            }
-
-            return walls;
-        }
-
         private void MazeRenderer_SizeChanged(object sender, System.EventArgs e)
         {
             Refresh();
