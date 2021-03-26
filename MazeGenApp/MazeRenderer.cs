@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -56,6 +57,7 @@ namespace MazeGen.App
             using Brush solutionBrush = new SolidBrush(SolutionColor);
             using Brush currentCellBrush = new SolidBrush(CurrentCellColor);
             using Pen wallPen = new Pen(ForeColor);
+
             // Render cells.
             for (int x = 0; x < Maze.Width; x++)
             {
@@ -93,30 +95,12 @@ namespace MazeGen.App
                 }
             }
 
-            // Render vertical walls.
-            int[][] vlines = Maze.CalcVerticalWalls();
-            for(int x = 0; x < vlines.Length; x++)
+            // Render Walls
+            MazeWall[] walls = Maze.CalcWalls();
+            Debug.WriteLine(walls.Length);
+            foreach (MazeWall wall in walls)
             {
-                int[] lines = vlines[x];
-                if (lines == null) continue;
-
-                for (int y = 0; y < lines.Length; y += 2)
-                {
-                    g.DrawLine(Pens.White, x * k + xOff, lines[y + 0] * k + yOff, x * k + xOff, lines[y + 1] * k + yOff);
-                }
-            }
-
-            // Render horizontal walls.
-            int[][] hlines = Maze.CalcHorizontalWalls();
-            for (int y = 0; y < hlines.Length; y++)
-            {
-                int[] lines = hlines[y];
-                if (lines == null) continue;
-
-                for (int x = 0; x < lines.Length; x += 2)
-                {
-                    g.DrawLine(Pens.White, lines[x + 0] * k + xOff, y * k + yOff, lines[x + 1] * k + xOff, y * k + yOff);
-                }
+                g.DrawLine(wallPen, wall.X1 * k + xOff, wall.Y1 * k + yOff, wall.X2 * k + xOff, wall.Y2 * k + yOff);
             }
         }
         private void MazeRenderer_SizeChanged(object sender, System.EventArgs e)

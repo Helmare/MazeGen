@@ -28,6 +28,17 @@ namespace MazeGen
         }
 
         /// <summary>
+        ///     Calculates the optimal maze walls.
+        /// </summary>
+        /// <returns></returns>
+        public MazeWall[] CalcWalls()
+        {
+            List<MazeWall> walls = new List<MazeWall>();
+            walls.AddRange(CalcVerticalWalls());
+            walls.AddRange(CalcHorizontalWalls());
+            return walls.ToArray();
+        }
+        /// <summary>
         ///     Calculates all vertical walls for the maze.
         /// </summary>
         /// <returns>
@@ -36,31 +47,32 @@ namespace MazeGen
         ///     array is the X value for the walls. The ints in the array 
         ///     are line segment positions along the vertical axis.
         /// </returns>
-        public int[][] CalcVerticalWalls()
+        public MazeWall[] CalcVerticalWalls()
         {
             // Setup vertical walls
-            int[][] walls = new int[Width + 1][];
-            walls[0] = new int[] { 1, Height };
-            walls[Width] = new int[] { 0, Height - 1 };
+            List<MazeWall> walls = new List<MazeWall>();
+            walls.Add(MazeWall.Vert(0, 1, Height));
+            walls.Add(MazeWall.Vert(Width, 0, Height - 1));
 
             // Calculate vertical walls for each cell.
             for (int x = 1; x < Width; x++)
             {
-                List<int> lines = new List<int>();
-                bool empty = true;
+                int start = -1;
                 for (int y = 0; y < Height; y++)
                 {
-                    if (empty && Cells[x, y].LeftWall || !empty && !Cells[x, y].LeftWall)
+                    if (start < 0 && Cells[x, y].LeftWall)
                     {
-                        empty = !empty;
-                        lines.Add(y);
+                        start = y;
+                    }
+                    else if (start >= 0 && !Cells[x, y].LeftWall)
+                    {
+                        walls.Add(MazeWall.Vert(x, start, y));
+                        start = -1;
                     }
                 }
-                if (!empty) lines.Add(Height);
-                walls[x] = lines.ToArray();
+                if (start >= 0) walls.Add(MazeWall.Vert(x, start, Height));
             }
-
-            return walls;
+            return walls.ToArray();
         }
         /// <summary>
         ///     Calculates all horizontal walls for the maze.
@@ -71,31 +83,32 @@ namespace MazeGen
         ///     array is the Y value for the walls. The ints in the array 
         ///     are line segment positions along the horizontal axis.
         /// </returns>
-        public int[][] CalcHorizontalWalls()
+        public MazeWall[] CalcHorizontalWalls()
         {
             // Setup horizontal walls
-            int[][] walls = new int[Height + 1][];
-            walls[0] = new int[] { 0, Height };
-            walls[Height] = new int[] { 0, Width };
+            List<MazeWall> walls = new List<MazeWall>();
+            walls.Add(MazeWall.Horz(0, 0, Width));
+            walls.Add(MazeWall.Horz(Height, 0, Width));
 
             // Calculate horizontal walls for each cell.
             for (int y = 1; y < Height; y++)
             {
-                List<int> lines = new List<int>();
-                bool empty = true;
+                int start = -1;
                 for (int x = 0; x < Width; x++)
                 {
-                    if (empty && Cells[x, y].TopWall || !empty && !Cells[x, y].TopWall)
+                    if (start < 0 && Cells[x, y].TopWall)
                     {
-                        empty = !empty;
-                        lines.Add(x);
+                        start = x;
+                    }
+                    else if (start >= 0 && !Cells[x, y].TopWall)
+                    {
+                        walls.Add(MazeWall.Horz(y, start, x));
+                        start = -1;
                     }
                 }
-                if (!empty) lines.Add(Height);
-                walls[y] = lines.ToArray();
+                if (start >= 0) walls.Add(MazeWall.Horz(y, start, Width));
             }
-
-            return walls;
+            return walls.ToArray();
         }
     }
 }
