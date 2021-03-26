@@ -57,11 +57,14 @@ namespace MazeGen.App
             // renderer
             // 
             this.renderer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.renderer.CurrentCellColor = System.Drawing.Color.Magenta;
             this.renderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.renderer.EndpointColor = System.Drawing.Color.Blue;
             this.renderer.ForeColor = System.Drawing.Color.White;
+            this.renderer.IntersectionColor = System.Drawing.Color.Lime;
             this.renderer.Location = new System.Drawing.Point(0, 0);
             this.renderer.Margin = new System.Windows.Forms.Padding(0);
+            this.renderer.MazeBuilder = null;
             this.renderer.Name = "renderer";
             this.renderer.Size = new System.Drawing.Size(1299, 630);
             this.renderer.SolutionColor = System.Drawing.Color.DarkRed;
@@ -80,6 +83,7 @@ namespace MazeGen.App
             // 
             // btnStep
             // 
+            this.btnStep.AutoSize = true;
             this.btnStep.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnStep.Location = new System.Drawing.Point(0, 0);
             this.btnStep.Margin = new System.Windows.Forms.Padding(0);
@@ -113,6 +117,7 @@ namespace MazeGen.App
             this.Text = "MazeGen";
             this.container.ResumeLayout(false);
             this.controls.ResumeLayout(false);
+            this.controls.PerformLayout();
             this.ResumeLayout(false);
 
         }
