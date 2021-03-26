@@ -38,16 +38,7 @@ namespace MazeGen
             walls.AddRange(CalcHorizontalWalls());
             return walls.ToArray();
         }
-        /// <summary>
-        ///     Calculates all vertical walls for the maze.
-        /// </summary>
-        /// <returns>
-        ///     An array of int array's which represents walls where 
-        ///     each value is the height of a cell. The index of an int 
-        ///     array is the X value for the walls. The ints in the array 
-        ///     are line segment positions along the vertical axis.
-        /// </returns>
-        public MazeWall[] CalcVerticalWalls()
+        private List<MazeWall> CalcVerticalWalls()
         {
             // Setup vertical walls
             List<MazeWall> walls = new List<MazeWall>();
@@ -72,18 +63,9 @@ namespace MazeGen
                 }
                 if (start >= 0) walls.Add(MazeWall.Vert(x, start, Height));
             }
-            return walls.ToArray();
+            return walls;
         }
-        /// <summary>
-        ///     Calculates all horizontal walls for the maze.
-        /// </summary>
-        /// <returns>
-        ///     An array of int array's which represents walls where 
-        ///     each value is the width of a cell. The index of an int 
-        ///     array is the Y value for the walls. The ints in the array 
-        ///     are line segment positions along the horizontal axis.
-        /// </returns>
-        public MazeWall[] CalcHorizontalWalls()
+        private List<MazeWall> CalcHorizontalWalls()
         {
             // Setup horizontal walls
             List<MazeWall> walls = new List<MazeWall>();
@@ -108,7 +90,7 @@ namespace MazeGen
                 }
                 if (start >= 0) walls.Add(MazeWall.Horz(y, start, Width));
             }
-            return walls.ToArray();
+            return walls;
         }
     }
 }
