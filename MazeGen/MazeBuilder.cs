@@ -62,14 +62,25 @@ namespace MazeGen
             Dictionary<int, MazeCell> neighbors = new Dictionary<int, MazeCell>();
             for (int i = 0; i < 4; i++)
             {
-                MazeCell n = i switch
+                MazeCell n = null;
+                switch (i)
                 {
-                    0 => cell.Right,
-                    1 => cell.Top,
-                    2 => cell.Left,
-                    3 => cell.Bottom,
-                    _ => null,
-                };
+                    case 0:
+                        n = cell.Right;
+                        break;
+
+                    case 1:
+                        n = cell.Top;
+                        break;
+
+                    case 2:
+                        n = cell.Left;
+                        break;
+
+                    case 3:
+                        n = cell.Bottom;
+                        break;
+                }
                 if (n != null && n.Flags == 0) neighbors.Add(i, n);
             }
 

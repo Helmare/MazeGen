@@ -3,21 +3,21 @@
     /// <summary>
     ///     
     /// </summary>
-    public record MazeWall
+    public class MazeWall
     {
         /// <summary>
         ///     Gets the position on the minor axis.
         /// </summary>
-        public int Position { get; init; }
+        public int Position { get; }
         
         /// <summary>
         ///     Gets the start position on the major axis.
         /// </summary>
-        public int Start { get; init; }
+        public int Start { get;}
         /// <summary>
         ///     Gets the end position on the major axis.
         /// </summary>
-        public int End { get; init; }
+        public int End { get; }
         /// <summary>
         ///     Gets the length of the wall along the major axis.
         /// </summary>
@@ -31,17 +31,15 @@
         /// <summary>
         ///     Gets whether the wall is vertical.
         /// </summary>
-        public bool Vertical { get; init; }
+        public bool Vertical { get; }
         /// <summary>
         ///     Gets whether the wall is horizontal
         /// </summary>
         public bool Horizontal
         {
             get => !Vertical;
-            init => Vertical = !value;
         }
 
-        public MazeWall() { }
         public MazeWall(bool vertical, int position, int start, int end) 
             => (Vertical, Position, Start, End) = (vertical, position, start, end);
 
@@ -54,13 +52,7 @@
         /// <returns></returns>
         public static MazeWall Vert(int x, int y1, int y2)
         {
-            return new MazeWall
-            {
-                Vertical = true,
-                Position = x,
-                Start = y1,
-                End = y2
-            };
+            return new MazeWall(true, x, y1, y2);
         }
         /// <summary>
         ///     Shorthand method for creating horizontal walls.
@@ -71,13 +63,7 @@
         /// <returns></returns>
         public static MazeWall Horz(int y, int x1, int x2)
         {
-            return new MazeWall
-            {
-                Horizontal = true,
-                Position = y,
-                Start = x1,
-                End = x2
-            };
+            return new MazeWall(false, y, x1, x2);
         }
     }
 }
