@@ -102,12 +102,14 @@ namespace MazeGen
         /// <summary>
         ///     Finishes the maze (steps until finished).
         /// </summary>
-        public void Finish()
+        /// <returns>The finished maze.</returns>
+        public Maze Finish()
         {
             while (!IsFinished)
             {
                 Step();
             }
+            return Maze;
         }
     }
 }
