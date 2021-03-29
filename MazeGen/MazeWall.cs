@@ -13,7 +13,7 @@
         /// <summary>
         ///     Gets the start position on the major axis.
         /// </summary>
-        public int Start { get;}
+        public int Start { get; }
         /// <summary>
         ///     Gets the end position on the major axis.
         /// </summary>
@@ -23,10 +23,21 @@
         /// </summary>
         public int Length => End - Start;
 
+        //
+        // LINE RENDERING VALUES
+        //
         public int X1 =>  Vertical ? Position : Start;
         public int X2 =>  Vertical ? Position : End;
         public int Y1 => !Vertical ? Position : Start;
         public int Y2 => !Vertical ? Position : End;
+
+        //
+        // RECTANGLE RENDERING VALUES
+        //
+        public float CenterX => (X1 + X2) / 2f;
+        public float CenterY => (Y1 + Y2) / 2f;
+        public int Width =>  Vertical ? -1 : Length;
+        public int Height => Vertical ? Length : -1;
 
         /// <summary>
         ///     Gets whether the wall is vertical.
