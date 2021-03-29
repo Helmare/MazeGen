@@ -49,8 +49,8 @@ namespace MazeGen.App
             this.container.Margin = new System.Windows.Forms.Padding(0);
             this.container.Name = "container";
             this.container.RowCount = 2;
-            this.container.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.container.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.container.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.container.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 158F));
             this.container.Size = new System.Drawing.Size(1299, 788);
             this.container.TabIndex = 0;
             // 
