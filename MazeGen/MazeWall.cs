@@ -1,4 +1,6 @@
-﻿namespace MazeGen
+﻿using System;
+
+namespace MazeGen
 {
     /// <summary>
     ///     
@@ -26,8 +28,8 @@
         //
         // LINE RENDERING VALUES
         //
-        public int X1 =>  Vertical ? Position : Start;
-        public int X2 =>  Vertical ? Position : End;
+        public int X1 => Vertical ? Position : Start;
+        public int X2 => Vertical ? Position : End;
         public int Y1 => !Vertical ? Position : Start;
         public int Y2 => !Vertical ? Position : End;
 
@@ -52,7 +54,7 @@
         }
 
         public MazeWall(bool vertical, int position, int start, int end) 
-            => (Vertical, Position, Start, End) = (vertical, position, start, end);
+            => (Vertical, Position, Start, End) = (vertical, position, Math.Min(start, end), Math.Max(start, end));
 
         /// <summary>
         ///     Shorthand method for creating vertical walls.
